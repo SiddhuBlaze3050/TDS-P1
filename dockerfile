@@ -1,7 +1,9 @@
 FROM python:3.12-slim-bookworm
 
-# Install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
+# Install essential packages (curl and ca-certificates), then install Node.js (includes npm/npx)
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates && \
+curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+apt-get install -y nodejs
 
 # Download and install uv
 ADD https://astral.sh/uv/install.sh /uv-installer.sh
@@ -17,7 +19,7 @@ ENV PATH="/root/.local/bin:$PATH"
 WORKDIR /app
 
 # Copy application files
-COPY app.py /app
+COPY . /app
 
 # Explicitly set the correct binary path and use `sh -c`
 CMD ["/root/.local/bin/uv", "run", "app.py"]

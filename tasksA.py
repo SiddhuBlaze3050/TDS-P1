@@ -30,7 +30,8 @@ def A1(email="21f2000579@ds.study.iitm.ac.in"):
         raise HTTPException(status_code=500, detail=f"Error: {e.stderr}")
 # A1()
 def A2(prettier_version="prettier@3.4.2", filename="/data/format.md"):
-    command = [r"C:\Program Files\nodejs\npx.cmd", prettier_version, "--write", filename]
+    # command = [r"C:\Program Files\nodejs\npx.cmd", prettier_version, "--write", filename]
+    command = ["/usr/bin/npx", prettier_version, "--write", filename]
     try:
         subprocess.run(command, check=True)
         print("Prettier executed successfully.")
